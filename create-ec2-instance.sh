@@ -2,7 +2,7 @@
 
 #Display script usage details if no arguments are provided.
 if [ $# -lt "1" ]; then
-	echo -e "Please enter required arguments. \n Usage: ./create-key-pair.sh -keyname ec2"
+	echo -e "Please enter required arguments. \n Usage: ./create-key-pair.sh -instances 1 -keyname ec2key -grpname sg-1"
 	exit 1;
 fi
 
@@ -30,10 +30,6 @@ case $key in
 esac
 shift
 done
-
-if [[ ! -d ${WORKSPACE}/ec2instaces ]]; then
-	mkdir -p ${WORKSPACE}/ec2instaces
-fi
 
 #Create EC2 instances
 aws ec2 run-instances --image-id ami-14c5486b --count $NUMBER_OF_INSTANCES --instance-type t1.micro --key-name $KEY_NAME --security-groups $GROUPNAME
