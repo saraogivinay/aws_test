@@ -30,15 +30,15 @@ if [[ ! -d ~/ec2keyfiles ]]; then
 fi
 
 #Run key-pair creation command.
-aws ec2 create-key-pair --key-name $KEYNAME --query 'KeyMaterial' --output text > ~/ec2keyfiles/$KEYNAME.pem
+aws ec2 create-key-pair --key-name $KEY_NAME --query 'KeyMaterial' --output text > ~/ec2keyfiles/$KEY_NAME.pem
 
-chmod 400 ~/ec2keyfiles/$KEYNAME.pem
+chmod 400 ~/ec2keyfiles/$KEY_NAME.pem
 
 #
 if [[ $? -ne 0 ]]; then
 	echo "Key pair creation failed."
-	if [[ -f ~/ec2keyfiles/$KEYNAME.pem ]]; then
-		rm -f ~/ec2keyfiles/$KEYNAME.pem
+	if [[ -f ~/ec2keyfiles/$KEY_NAME.pem ]]; then
+		rm -f ~/ec2keyfiles/$KEY_NAME.pem
 		echo "Key file removed."
 	fi
 fi
