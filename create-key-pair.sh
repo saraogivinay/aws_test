@@ -32,9 +32,12 @@ fi
 #Run key-pair creation command.
 aws ec2 create-key-pair --key-name $KEY_NAME --query 'KeyMaterial' --output text > ~/ec2keyfiles/$KEY_NAME.pem
 
+if [[ $? -ne 0 ]]; then
+	exit 1
+fi
+
 chmod 400 ~/ec2keyfiles/$KEY_NAME.pem
 
-#
 if [[ $? -ne 0 ]]; then
 	echo "Key pair creation failed."
 	if [[ -f ~/ec2keyfiles/$KEY_NAME.pem ]]; then
