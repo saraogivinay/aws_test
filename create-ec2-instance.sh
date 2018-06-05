@@ -34,4 +34,9 @@ done
 #Create EC2 instances
 aws ec2 run-instances --image-id ami-14c5486b --count $NUMBER_OF_INSTANCES --instance-type t1.micro --key-name $KEY_NAME --security-groups $GROUPNAME
 
+if [[ $? -ne 0 ]]; then
+	echo "Error running instance. Please check console log."
+	exit 1
+fi
+
 exit
