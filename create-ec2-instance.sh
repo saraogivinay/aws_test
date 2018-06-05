@@ -11,7 +11,7 @@ while [[ $# -gt 0 ]]
 do
 key="$1"
 case $key in
-	-instances
+	-instances)
 	NUMBER_OF_INSTANCES="$2"
 	shift
 	;;
