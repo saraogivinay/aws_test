@@ -46,4 +46,4 @@ if [[ $? -ne 0 ]]; then
 	fi
 fi
 
-exit
+exit $?

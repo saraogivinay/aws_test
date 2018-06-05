@@ -30,6 +30,12 @@ done
 IP_ADDRESS=$(curl http://ifconfig.io)
 CIDR_BLOCK=$(ipcalc $IP_ADDRESS | grep Network | awk -F " " '{print $2}')
 
+function checkExitStatus() {
+	if [[ $1 -ne 0 ]]; then
+		exit 1
+	fi	
+}
+
 aws ec2 create-security-group --group-name $GROUP_NAME --description "$GROUP_DESCRIPTION"
 checkExitStatus $?
 
@@ -39,10 +45,4 @@ checkExitStatus $?
 aws ec2 authorize-security-group-ingress --group-name $GROUP_NAME --protocol tcp --port 80 --cidr 0.0.0.0/0
 checkExitStatus $?
 
-function checkExitStatus() {
-	if [[ $1 -ne 0 ]]; then
-		exit 1
-	fi	
-}
-
-exit
+exit $?
