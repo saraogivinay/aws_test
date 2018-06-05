@@ -11,7 +11,7 @@ while [[ $# -gt 0 ]]
 do
 key="$1"
 case $key in
-	-instanceid
+	-instanceid)
 	INSTANCE_ID="$2"
 	shift
 	;;
