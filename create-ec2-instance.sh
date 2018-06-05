@@ -2,7 +2,7 @@
 
 #Display script usage details if no arguments are provided.
 if [ $# -lt "1" ]; then
-	echo -e "Please enter required arguments. \n Usage: ./create-key-pair.sh -instances 1 -keyname ec2key -grpname sg-1"
+	echo -e "Please enter required arguments. \n Usage: ./create-ec2-instance.sh -instances 1 -keyname ec2key -grpname sg-1"
 	exit 1;
 fi
 
