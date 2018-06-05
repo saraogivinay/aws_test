@@ -2,7 +2,7 @@
 
 #Display script usage details if no arguments are provided.
 if [ $# -lt "1" ]; then
-	echo -e "Please enter required arguments. \n Usage: ./create-ec2-instance.sh -instances 1 -keyname ec2key -grpname sg-1"
+	echo -e "Please enter required arguments. \n Usage: ./create-ec2-instance.sh -instances 1 -keyname ec2key -grpname sg-1 -tagkey ec2instace -tagkeyvalue dev"
 	exit 1;
 fi
 
@@ -23,6 +23,14 @@ case $key in
 	GROUP_NAME="$2"
 	shift
 	;;
+	-tagkey)
+	TAG_KEY="$2"
+	shift
+	;;
+	-tagkeyvalue)
+	TAG_KEY_VALUE="$2"
+	shift
+	;;
 	*)
 	echo "Option $key is invalid."
 	exit 1
@@ -32,10 +40,21 @@ shift
 done
 
 #Create EC2 instances
-aws ec2 run-instances --image-id ami-14c5486b --count $NUMBER_OF_INSTANCES --instance-type t1.micro --key-name $KEY_NAME --security-groups $GROUP_NAME
+INSTANCE_ID=$(aws ec2 run-instances --image-id ami-14c5486b --count $NUMBER_OF_INSTANCES --instance-type t1.micro --key-name $KEY_NAME --security-groups $GROUP_NAME | awk -F " " {'print $7'} | grep i-)
 
 if [[ $? -ne 0 ]]; then
 	echo "Error running instance. Please check console log."
+	exit 1
+fi
+
+echo "EC2 Instance id is: " $INSTANCE_ID
+touch ~/instanceid.txt
+echo "INSTANCE_ID=$INSTANCE_ID" > ~/instanceid.txt
+
+aws ec2 create-tags --resources  $INSTANCE_ID --tags Key=$TAG_KEY,Value=$TAG_KEY_VALUE
+
+if [[ $? -ne 0 ]]; then
+	echo "Tagging ec2 instance failed. Please check console log."
 	exit 1
 fi
 
