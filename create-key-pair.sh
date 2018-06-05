@@ -40,7 +40,7 @@ chmod 400 ~/ec2keyfiles/$KEY_NAME.pem
 
 if [[ $? -ne 0 ]]; then
 	echo "Key pair creation failed."
-	if [[ -f ~/ec2keyfiles/$KEY_NAME.pem ]]; then
+	if [[ -e ~/ec2keyfiles/$KEY_NAME.pem ]]; then
 		rm -f ~/ec2keyfiles/$KEY_NAME.pem
 		echo "Key file removed."
 	fi
