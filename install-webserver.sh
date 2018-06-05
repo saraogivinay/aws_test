@@ -34,6 +34,8 @@ done
 #Retrive public dns host name
 HOST=$(aws ec2 describe-instances --instance-id $INSTANCE_ID | grep ASSOCIATION | awk -F " " 'NR==1{print $3}')
 
+echo "Public DNS hostname: " $HOST
+
 if [[ -n $HOST ]]; then
 	echo "Unable to retrieve host name. Check console log for details."
 	exit 1
