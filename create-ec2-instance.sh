@@ -48,8 +48,8 @@ if [[ $? -ne 0 ]]; then
 fi
 
 echo "EC2 Instance id is: " $INSTANCE_ID
-touch ~/instanceid.txt
-echo "INSTANCE_ID=$INSTANCE_ID" > ~/instanceid.txt
+touch ${JENKINS_HOME}/instanceid.txt
+echo "INSTANCE_ID=$INSTANCE_ID" > ${JENKINS_HOME}/instanceid.txt
 
 aws ec2 create-tags --resources  $INSTANCE_ID --tags Key=$TAG_KEY,Value=$TAG_KEY_VALUE
 
